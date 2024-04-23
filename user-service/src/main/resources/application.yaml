@@ -1,0 +1,16 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: USER-SERVICE
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: tweetdb
+      auto-index-creation: true
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
