@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin
 @RequestMapping("/api/v1.0/tweets")
@@ -51,14 +52,14 @@ public class AuthController {
 
     @GetMapping(value = {"/user/search/{username}"})
     public ResponseEntity<User> getUserByUsername(@PathVariable("username") String username) {
-        User user = authService.getUserByUsername(username);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        Optional<User> user = authService.getUserByUsername(username);
+        return user.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.BAD_REQUEST));
     }
 
     @GetMapping(value = {"/user/search/email/{email}"})
     public ResponseEntity<User> getUserByEmail(@PathVariable("email") String email) {
-        User user = authService.getUserByEmail(email);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        Optional<User> user = authService.getUserByEmail(email);
+        return user.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.BAD_REQUEST));
     }
 
 }

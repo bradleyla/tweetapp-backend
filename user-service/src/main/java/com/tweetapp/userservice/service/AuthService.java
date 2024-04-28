@@ -4,6 +4,7 @@ import com.tweetapp.userservice.entity.User;
 import com.tweetapp.userservice.payload.*;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AuthService {
     LoginResponse login(LoginDto loginDto);
@@ -11,7 +12,7 @@ public interface AuthService {
     PasswordResponse resetPassword(String username, PasswordDto passwordDto);
     List<User> getAllUsers();
 
-    User getUserByUsername(String username);
+    Optional<User> getUserByUsername(String username);
 
-    User getUserByEmail(String email);
+    Optional<User> getUserByEmail(String email);
 }
