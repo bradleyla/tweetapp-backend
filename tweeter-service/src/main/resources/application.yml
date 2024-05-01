@@ -1,0 +1,15 @@
+server:
+  port: 9002
+
+spring:
+  application:
+    name: TWEET-SERVICE
+  datasource:
+    url: jdbc:mysql://localhost:3306/tweetdb
+    username: root
+    password: ThePyramids3
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
