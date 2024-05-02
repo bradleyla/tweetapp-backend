@@ -8,6 +8,8 @@
         <option value="$PROJECT_DIR$/cloud-gateway/pom.xml" />
         <option value="$PROJECT_DIR$/config-server/pom.xml" />
         <option value="$PROJECT_DIR$/service-registry/pom.xml" />
+        <option value="$PROJECT_DIR$/reply-service/pom.xml" />
+        <option value="$PROJECT_DIR$/tweeter-service/pom.xml" />
       </list>
     </option>
   </component>

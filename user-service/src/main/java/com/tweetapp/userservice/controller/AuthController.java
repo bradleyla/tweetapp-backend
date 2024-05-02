@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin
-@RequestMapping("/api/v1.0/tweets")
+@CrossOrigin()
+@RequestMapping("/api/v1.0/auth")
 @RestController
 public class AuthController {
 
@@ -59,6 +59,12 @@ public class AuthController {
     @GetMapping(value = {"/user/search/email/{email}"})
     public ResponseEntity<User> getUserByEmail(@PathVariable("email") String email) {
         Optional<User> user = authService.getUserByEmail(email);
+        return user.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.BAD_REQUEST));
+    }
+
+    @GetMapping(value = {"/user/search/id/{id}"})
+    public ResponseEntity<User> getUserById(@PathVariable("id") Long id) {
+        Optional<User> user = authService.getUserById(id);
         return user.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.BAD_REQUEST));
     }
 

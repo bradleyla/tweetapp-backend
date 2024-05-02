@@ -24,6 +24,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -106,7 +107,7 @@ public class AuthControllerTest {
         given(authService.register(any(RegisterDto.class)))
                 .willReturn(regResponse);
 
-        ResultActions response = mockMvc.perform(post("/api/v1.0/tweets/register")
+        ResultActions response = mockMvc.perform(post("/api/v1.0/auth/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(user)));
 
@@ -125,7 +126,7 @@ public class AuthControllerTest {
         given(authService.register(any(RegisterDto.class)))
                 .willReturn(regResponse);
 
-        ResultActions response = mockMvc.perform(post("/api/v1.0/tweets/register")
+        ResultActions response = mockMvc.perform(post("/api/v1.0/auth/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(registerDto)));
 
@@ -142,7 +143,7 @@ public class AuthControllerTest {
         given(authService.login(any(LoginDto.class)))
                 .willReturn(loginResponse);
 
-        ResultActions response = mockMvc.perform(post("/api/v1.0/tweets/login")
+        ResultActions response = mockMvc.perform(post("/api/v1.0/auth/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(loginDto)));
 
@@ -160,7 +161,7 @@ public class AuthControllerTest {
         given(authService.resetPassword(eq(user.getUsername()), any(PasswordDto.class)))
                 .willReturn(passwordResponse);
 
-        ResultActions response = mockMvc.perform(post("/api/v1.0/tweets/{username}/forgot", user.getUsername())
+        ResultActions response = mockMvc.perform(post("/api/v1.0/auth/{username}/forgot", user.getUsername())
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("utf-8")
                 .content(objectMapper.writeValueAsString(passwordDto)));
@@ -180,7 +181,7 @@ public class AuthControllerTest {
         given(authService.resetPassword(eq(user.getUsername()), any(PasswordDto.class)))
                 .willReturn(passwordResponse);
 
-        ResultActions response = mockMvc.perform(post("/api/v1.0/tweets/{username}/forgot", user.getUsername())
+        ResultActions response = mockMvc.perform(post("/api/v1.0/auth/{username}/forgot", user.getUsername())
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("utf-8")
                 .content(objectMapper.writeValueAsString(passwordDto)));
@@ -196,7 +197,7 @@ public class AuthControllerTest {
         given(authService.getAllUsers())
                 .willReturn(Collections.emptyList());
 
-        ResultActions response = mockMvc.perform(get("/api/v1.0/tweets/users/all")
+        ResultActions response = mockMvc.perform(get("/api/v1.0/auth/users/all")
                 .contentType(MediaType.APPLICATION_JSON));
 
         response.andDo(print())
@@ -212,7 +213,7 @@ public class AuthControllerTest {
         given(authService.getAllUsers())
                 .willReturn(users);
 
-        ResultActions response = mockMvc.perform(get("/api/v1.0/tweets/users/all")
+        ResultActions response = mockMvc.perform(get("/api/v1.0/auth/users/all")
                 .contentType(MediaType.APPLICATION_JSON));
 
         response.andDo(print())
@@ -230,9 +231,9 @@ public class AuthControllerTest {
     @Test
     public void givenUsername_whenGetUserByUsername_thenReturnUserObject() throws Exception {
         given(authService.getUserByUsername(any(String.class)))
-                .willReturn(user);
+                .willReturn(Optional.of(user));
 
-        ResultActions response = mockMvc.perform(get("/api/v1.0/tweets/user/search/{username}", user.getUsername())
+        ResultActions response = mockMvc.perform(get("/api/v1.0/auth/user/search/{username}", user.getUsername())
                 .contentType(MediaType.APPLICATION_JSON));
 
         response.andDo(print())
@@ -246,9 +247,9 @@ public class AuthControllerTest {
     @Test
     public void givenUserEmail_whenGetUserByEmail_thenReturnUserObject() throws Exception {
         given(authService.getUserByEmail(any(String.class)))
-                .willReturn(user);
+                .willReturn(Optional.of(user));
 
-        ResultActions response = mockMvc.perform(get("/api/v1.0/tweets/user/search/email/{email}", user.getEmail())
+        ResultActions response = mockMvc.perform(get("/api/v1.0/auth/user/search/email/{email}", user.getEmail())
                 .contentType(MediaType.APPLICATION_JSON));
 
         response.andDo(print())

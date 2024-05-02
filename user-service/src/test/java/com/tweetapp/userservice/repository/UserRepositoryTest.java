@@ -1,12 +1,13 @@
 package com.tweetapp.userservice.repository;
 
 import com.tweetapp.userservice.entity.User;
-import org.bson.types.ObjectId;
+//import org.bson.types.ObjectId;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.security.authentication.BadCredentialsException;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.NoSuchElementException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@DataMongoTest
+@DataJpaTest
 public class UserRepositoryTest {
 
     @Autowired
@@ -46,7 +47,7 @@ public class UserRepositoryTest {
         User savedUser = userRepository.save(user);
 
         assertThat(savedUser).isNotNull();
-        assertThat(savedUser.getId()).isNotNull();
+        assertThat(savedUser.getUserId()).isGreaterThan(0);
     }
 
     // findAll()
@@ -81,6 +82,8 @@ public class UserRepositoryTest {
         assertThat(userList.size()).isEqualTo(2);
         assertThat(userList.get(0).getFirstName()).isEqualTo("Mark");
         assertThat(userList.get(1).getFirstName()).isEqualTo("Luke");
+        assertThat(userList.get(0).getUserId()).isGreaterThan(0);
+        assertThat(userList.get(1).getUserId()).isGreaterThan(0);
     }
 
     @DisplayName("Find All Users JUnit Test Failed")
@@ -135,14 +138,14 @@ public class UserRepositoryTest {
         userRepository.save(user1);
         userRepository.save(user2);
 
-        User foundUser1 = userRepository.findById(user1.getId()).get();
-        User foundUser2 = userRepository.findById(user2.getId()).get();
+        User foundUser1 = userRepository.findById(user1.getUserId()).get();
+        User foundUser2 = userRepository.findById(user2.getUserId()).get();
 
 
         assertThat(foundUser1).isNotNull();
         assertThat(foundUser2).isNotNull();
-        assertThat(foundUser1.getId()).isNotNull();
-        assertThat(foundUser2.getId()).isNotNull();
+        assertThat(foundUser1.getUserId()).isGreaterThan(0);
+        assertThat(foundUser2.getUserId()).isGreaterThan(0);
         assertThat(foundUser1.getFirstName()).isEqualTo("Mark");
         assertThat(foundUser2.getFirstName()).isEqualTo("Luke");
     }
@@ -160,7 +163,7 @@ public class UserRepositoryTest {
                 .build();
 
         User user2 = User.builder()
-                .id(new ObjectId())
+                .userId(2L)
                 .firstName("Luke")
                 .lastName("Bradley")
                 .username("luke123")
@@ -171,10 +174,10 @@ public class UserRepositoryTest {
 
         userRepository.save(user1);
 
-        User foundUser1 = userRepository.findById(user1.getId()).get();
+        User foundUser1 = userRepository.findById(user1.getUserId()).get();
 
         assertThrows(NoSuchElementException.class, () -> {
-            User foundUser2 = userRepository.findById(user2.getId()).get();
+            User foundUser2 = userRepository.findById(user2.getUserId()).get();
         });
     }
 
@@ -208,8 +211,8 @@ public class UserRepositoryTest {
 
         assertThat(foundUser1).isNotNull();
         assertThat(foundUser2).isNotNull();
-        assertThat(foundUser1.getId()).isNotNull();
-        assertThat(foundUser2.getId()).isNotNull();
+        assertThat(foundUser1.getUserId()).isGreaterThan(0);
+        assertThat(foundUser2.getUserId()).isGreaterThan(0);
         assertThat(foundUser1.getFirstName()).isEqualTo("Mark");
         assertThat(foundUser2.getFirstName()).isEqualTo("Luke");
     }
@@ -274,8 +277,8 @@ public class UserRepositoryTest {
 
         assertThat(foundUser1).isNotNull();
         assertThat(foundUser2).isNotNull();
-        assertThat(foundUser1.getId()).isNotNull();
-        assertThat(foundUser2.getId()).isNotNull();
+        assertThat(foundUser1.getUserId()).isGreaterThan(0);
+        assertThat(foundUser2.getUserId()).isGreaterThan(0);
         assertThat(foundUser1.getFirstName()).isEqualTo("Mark");
         assertThat(foundUser2.getFirstName()).isEqualTo("Luke");
     }
@@ -340,8 +343,8 @@ public class UserRepositoryTest {
 
         assertThat(foundUser1).isNotNull();
         assertThat(foundUser2).isNotNull();
-        assertThat(foundUser1.getId()).isNotNull();
-        assertThat(foundUser2.getId()).isNotNull();
+        assertThat(foundUser1.getUserId()).isGreaterThan(0);
+        assertThat(foundUser2.getUserId()).isGreaterThan(0);
         assertThat(foundUser1.getFirstName()).isEqualTo("Mark");
         assertThat(foundUser2.getFirstName()).isEqualTo("Luke");
     }

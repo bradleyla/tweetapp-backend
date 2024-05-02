@@ -295,8 +295,8 @@ public class AuthServiceImplTest {
         given(userRepository.findByUsername(user.getUsername())).willReturn(Optional.of(user));
         given(userRepository.findByUsername(user2.getUsername())).willReturn(Optional.of(user2));
 
-        User foundUser1 = authService.getUserByUsername(user.getUsername());
-        User foundUser2 = authService.getUserByUsername(user2.getUsername());
+        User foundUser1 = authService.getUserByUsername(user.getUsername()).get();
+        User foundUser2 = authService.getUserByUsername(user2.getUsername()).get();
 
         assertThat(foundUser1).isNotNull();
         assertThat(foundUser2).isNotNull();
@@ -310,10 +310,10 @@ public class AuthServiceImplTest {
         given(userRepository.findByUsername(user.getUsername())).willReturn(Optional.of(user));
         given(userRepository.findByUsername(user2.getUsername())).willReturn(null);
 
-        User foundUser1 = authService.getUserByUsername(user.getUsername());
+        User foundUser1 = authService.getUserByUsername(user.getUsername()).get();
 
         assertThrows(NullPointerException.class, () -> {
-            User foundUser2 = authService.getUserByUsername(user2.getUsername());
+            User foundUser2 = authService.getUserByUsername(user2.getUsername()).get();
         });
     }
 
@@ -323,8 +323,8 @@ public class AuthServiceImplTest {
         given(userRepository.findByEmail(user.getEmail())).willReturn(Optional.of(user));
         given(userRepository.findByEmail(user2.getEmail())).willReturn(Optional.of(user2));
 
-        User foundUser1 = authService.getUserByEmail(user.getEmail());
-        User foundUser2 = authService.getUserByEmail(user2.getEmail());
+        User foundUser1 = authService.getUserByEmail(user.getEmail()).get();
+        User foundUser2 = authService.getUserByEmail(user2.getEmail()).get();
 
         assertThat(foundUser1).isNotNull();
         assertThat(foundUser2).isNotNull();
@@ -338,10 +338,10 @@ public class AuthServiceImplTest {
         given(userRepository.findByEmail(user.getEmail())).willReturn(Optional.of(user));
         given(userRepository.findByEmail(user2.getEmail())).willReturn(null);
 
-        User foundUser1 = authService.getUserByEmail(user.getEmail());
+        User foundUser1 = authService.getUserByEmail(user.getEmail()).get();
 
         assertThrows(NullPointerException.class, () -> {
-            User foundUser2 = authService.getUserByEmail(user2.getEmail());
+            User foundUser2 = authService.getUserByEmail(user2.getEmail()).get();
         });
     }
 }

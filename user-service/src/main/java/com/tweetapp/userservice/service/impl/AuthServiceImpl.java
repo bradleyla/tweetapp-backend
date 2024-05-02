@@ -145,5 +145,10 @@ public class AuthServiceImpl implements AuthService {
         return userRepository.findByEmail(email);
     }
 
+    @Override
+    public Optional<User> getUserById(Long id) {
+        return userRepository.findById(id);
+    }
+
 
 }

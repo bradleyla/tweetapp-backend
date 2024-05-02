@@ -1,5 +1,6 @@
 package com.cogent.tweeterservice.model;
 
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +13,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "roles")
+//@Document(collection = "roles")
+@Table(
+        name = "roles"
+)
 public class Role {
     @Id
     private ObjectId id;

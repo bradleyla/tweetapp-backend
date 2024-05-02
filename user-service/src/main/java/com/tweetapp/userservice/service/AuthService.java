@@ -15,4 +15,6 @@ public interface AuthService {
     Optional<User> getUserByUsername(String username);
 
     Optional<User> getUserByEmail(String email);
+
+    Optional<User> getUserById(Long id);
 }

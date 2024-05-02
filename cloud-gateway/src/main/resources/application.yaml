@@ -4,15 +4,35 @@ server:
 spring:
   application:
     name: CLOUD-GATEWAY
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
   cloud:
     gateway:
       routes:
         - id: USER-SERVICE
           uri: lb://USER-SERVICE
           predicates:
-            - Path=/api/v1.0/tweets/**
+            - Path=/api/v1.0/auth/**
           filters:
             - name: CircuitBreaker
               args:
                 name: USER-SERVICE
                 fallbackuri: forward:/userServiceFallBack
+        - id: TWEET-SERVICE
+          uri: lb://TWEET-SERVICE
+          predicates:
+            - Path=/api/v1.0/tweets/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: TWEET-SERVICE
+                fallbackuri: forward:/tweetServiceFallBack
+        - id: REPLY-SERVICE
+          uri: lb://REPLY-SERVICE
+          predicates:
+            - Path=/api/v1.0/replies/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: REPLY-SERVICE
+                fallbackuri: forward:/tweetServiceFallBack

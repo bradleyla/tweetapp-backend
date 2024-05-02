@@ -28,7 +28,7 @@ public class TweeterController {
     public ResponseEntity<TweeterResponse> getTweetById(@PathVariable("id") Long tweetId) {
         TweeterResponse tweet = tweetService.getTweetById(tweetId);
         if (tweet == null) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(tweet, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(tweet, HttpStatus.OK);
     }
@@ -38,7 +38,7 @@ public class TweeterController {
     public ResponseEntity<List<TweeterResponse>> getAllTweetsByUser(@PathVariable("username") String username) {
         var data = tweetService.getAllTweetsByUsername(username);
         if (data == null) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(data, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(data, HttpStatus.OK);
     }
@@ -50,7 +50,7 @@ public class TweeterController {
             @RequestBody Tweeter tweet) {
         var data = tweetService.postTweet(username, tweet);
         if (data == null) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(data, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(data, HttpStatus.CREATED);
     }
@@ -81,7 +81,7 @@ public class TweeterController {
             @PathVariable("tweetId") Long id) {
         TweeterResponse data = tweetService.likeTweet(username, id);
         if (data == null) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(data, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(data, HttpStatus.OK);
     }

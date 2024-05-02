@@ -4,13 +4,27 @@ server:
 spring:
   application:
     name: USER-SERVICE
-  data:
-    mongodb:
-      host: localhost
-      port: 27017
-      database: tweetdb
-      auto-index-creation: true
-#  jpa:
-#    hibernate:
-#      ddl-auto: update
-#    show-sql: true
+#  data:
+#    mongodb:
+#      host: localhost
+#      port: 27017
+#      database: tweetdb
+#      auto-index-creation: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/tweetdb
+    username: root
+    password: Ashes1In1The4Snow6
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    topic:
+      producer:
+        name: user-topic
+
